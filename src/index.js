@@ -18,6 +18,7 @@ import Notiflix from 'notiflix';
 const refs = {
   breedCats: document.querySelector('.breed-select'),
   catInfo: document.querySelector('.cat-info'),
+  loader: document.querySelector('.loader'),
 }
 
 // console.log(refs);
