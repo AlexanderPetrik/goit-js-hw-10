@@ -1,0 +1,14 @@
+.hidden-js {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .25s ease-in-out;
+}
+
+.ss-main {
+  width: 480px;
+  margin-bottom: 20px;
+}
+
+.cat-info {
+  width: 480px;
+}
