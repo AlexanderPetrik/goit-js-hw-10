@@ -4,9 +4,11 @@
   transition: opacity .25s ease-in-out;
 }
 
-.ss-main {
+.ss-main.breed-select {
   width: 480px;
   margin-bottom: 20px;
+  visibility: visible;
+  opacity: 1;
 }
 
 .cat-info {

@@ -5,37 +5,18 @@ const headers = {
     }
 }
 
-function throwError() {
-  throw new Error('Oops! Something went wrong! Try reloading the page!');
-}
-
-export function fetchImageByBreed(breedId) {
-  return fetch(`${URL}/images/search?breed_ids=${breedId}`, headers)
-    .then(response => {
-      if (!response.ok) {
-        throwError();
-      }
-      return response.json();
-    }).catch(throwError);
-}
 
 export function fetchCatByBreed(breedId) {
-  return fetch(`${URL}/breeds/${breedId}`, headers)
+  return fetch(`${URL}/images/search?breed_ids=${breedId}`, headers)
     .then(response => {
-      if (!response.ok) {
-        throwError();
-      }
       return response.json();
-    }).catch(throwError);
+    })
 }
 
 export function fetchBreeds() {
   return fetch(`${URL}/breeds`, headers)
     .then(response => {
-      if (!response.ok) {
-        throwError();
-      }
       return response.json();
-    }).catch(throwError);
+    })
 }
 

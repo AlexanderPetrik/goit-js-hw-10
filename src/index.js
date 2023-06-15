@@ -5,7 +5,6 @@ import { fetchCatByBreed, fetchImageByBreed, fetchBreeds } from './api/cat-api';
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
 
-
 // Получить рефс +
 // Получить список пород +
 // При загрузке вывести список пород в селект +
@@ -20,11 +19,13 @@ import SlimSelect from 'slim-select';
     // Error +
 
 const refs = {
-  breedCats: document.querySelector('.breed-select'),
+  breedCats: document.querySelector('select.breed-select'),
   catInfo: document.querySelector('.cat-info'),
   loader: document.querySelector('.lds-roller'),
   error: document.querySelector('.error'),
 }
+
+let breeds;
 
 const toggleLoader = (show) => {
   if (show) {
@@ -60,10 +61,9 @@ const drawImage = response => {
   refs.catInfo.prepend(catPicture);
 };
 
-
-
 fetchBreeds()
   .then(response => {
+    breeds = response;
     const options = response.map((cat) => {
       const option = document.createElement(`option`);
       option.value = cat.id;
@@ -71,6 +71,7 @@ fetchBreeds()
       return option
     })
     refs.breedCats.append(...options);
+    refs.breedCats.classList.remove('hidden-js')
     new SlimSelect({
       select: '.breed-select'
     })
@@ -86,14 +87,16 @@ refs.breedCats.addEventListener('change', (event) => {
 
   refs.catInfo.innerHTML = '';
   toggleLoader(true);
-  Promise
-    .all([
-      fetchCatByBreed(event.target.value),
-      fetchImageByBreed(event.target.value),
-    ])
+  fetchCatByBreed(event.target.value)
     .then(response => {
-      drawInfo(response[0]);
-      drawImage(response[1]);
+      if (!response.length) {
+        throw 0
+      }
+      const breed = breeds.find((item) => {
+        return item.id === event.target.value;
+      });
+      drawInfo(breed);
+      drawImage(response);
     })
     .catch(showError)
     .finally(() => {
